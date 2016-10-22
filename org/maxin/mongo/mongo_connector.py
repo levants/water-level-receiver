@@ -104,7 +104,7 @@ class mongo_receiver(object):
         level_info new level info
     """
     ext_number = float(ext_info)
-    return (ext_number - 1 > level_info or ext_number + 1 < level_info)
+    return ext_number - 1 > level_info or ext_number + 1 < level_info
   
   def validate_and_insert(self, level_info, container_id):
     """Validates and adds water level info to database

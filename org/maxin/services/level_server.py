@@ -75,6 +75,10 @@ class water_level_controller(object):
 # Receives water level information from HTTP request
 @app.route('/', methods=['GET', 'POST'])
 def receive_level():
+  """Service with HTTP methods
+    Return:
+      resp - HTTP response
+  """
   
   if request.method == 'POST':
     pass
