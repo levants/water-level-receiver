@@ -1,7 +1,7 @@
 '''
 Created on Jul 7, 2016
 
-Utility class for recognizer controller
+Utility module for water level controller
 
 @author: Levan Tsinadze
 '''

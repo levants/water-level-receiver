@@ -20,7 +20,7 @@ INERT_ERROR = 'Could not save record cause of error'
 INERT_NONEED = 'Level was not changed and not saved'
 # MongoDB service
 class mongo_receiver(object):
-  """Mongo client for water level database"""
+  """MongoDB client for water level database"""
   
   def __init__(self, host='localhost', port=27017):
     self.client = MongoClient(host, port)

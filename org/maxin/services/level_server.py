@@ -69,7 +69,7 @@ class water_level_controller(object):
     else:
       respone_data = 'Could not find arguments'
       
-    return respone_data
+    return str(respone_data)
       
     
 # Receives water level information from HTTP request
