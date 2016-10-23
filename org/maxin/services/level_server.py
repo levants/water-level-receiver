@@ -8,6 +8,7 @@ Server to receive water levels
 from sys import argv
 
 from flask import Flask, request
+from flask.templating import render_template
 
 from org.maxin.mongo import mongo_connector as MONGO
 from org.maxin.mongo.mongo_connector import mongo_receiver
@@ -65,9 +66,9 @@ class water_level_controller(object):
         level_info = request.args.get('level_info')
         respone_data = self.write_level(level_info, container_id)
       else:
-        respone_data = 'Server is running'
+        respone_data = render_template("index.html")
     else:
-      respone_data = 'Could not find arguments'
+      respone_data = render_template("index.html")
       
     return str(respone_data)
       

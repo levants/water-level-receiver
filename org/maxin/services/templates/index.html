@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Water Level</title>
+<style>
+body {
+	border: 0;
+	padding: 0;
+	margin: 20px 0px;
+	background-color: #f0f0f0;
+}
+</style>
+</head>
+<body>
+	<table style="width: 80%; margin: auto;">
+		<tr>
+			<td style="text-align: right; width: 100px;"<button id="1000"
+					container_id=5 onclick="get_level_info(this, 5)">Click me</button></td>
+		</tr>
+		<tr>
+			<td>
+				<div id="result"></div>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+        function get_level_info(elmnt, container_id) {
+
+            var xhr = new XMLHttpRequest()
+            requestText = '/?read=true&container_id=' + container_id
+            xhr.open('GET', requestText, true)
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var answer = JSON.parse(xhr.responseText)
+                    alert(answer)
+                }
+            }
+        }
+    </script>
+</body>
+</html>

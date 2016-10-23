@@ -44,7 +44,6 @@ class mongo_receiver(object):
         container_id - identifier of water container:
       Return:
         mongo_record - water level record
-        
     """
     return {
               CONTAINER_KEY: container_id,
