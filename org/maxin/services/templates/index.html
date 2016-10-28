@@ -1,41 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Water Level</title>
+    <title>Map</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <link rel="stylesheet" href="https://openlayers.org/en/v3.19.0/css/ol.css" type="text/css">
+    <script type="text/javascript" src="http://openlayers.org/en/v3.12.1/build/ol.js"></script>
+    <script type="text/javascript" src="app/map.js"></script>
 <style>
 body {
-	border: 0;
-	padding: 0;
-	margin: 20px 0px;
-	background-color: #f0f0f0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+.ol-popup {
+    position: absolute;
+    background-color: white;
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    top: 50px;
+    left: 50px;
+    width: 400px;
+    z-index: 2;
+    display: none;
+}
+  
+.ol-popup-closer {
+    text-decoration: none;
+    position: absolute;
+    color: red;
+    top: 10px;
+    right: 10px;
 }
 </style>
 </head>
 <body>
-	<table style="width: 80%; margin: auto;">
-		<tr>
-			<td style="text-align: right; width: 100px;"<button id="1000"
-					container_id=5 onclick="get_level_info(this, 5)">Click me</button></td>
-		</tr>
-		<tr>
-			<td>
-				<div id="result"></div>
-			</td>
-		</tr>
-	</table>
-	<script type="text/javascript">
-        function get_level_info(elmnt, container_id) {
-
-            var xhr = new XMLHttpRequest()
-            requestText = '/?read=true&container_id=' + container_id
-            xhr.open('GET', requestText, true)
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var answer = JSON.parse(xhr.responseText)
-                    alert(answer)
-                }
-            }
-        }
-    </script>
+<div id="popup" class="ol-popup">
+<a href="#" id="popup-closer" class="ol-popup-closer">X</a>
+<h3 id="item-id"></h3>
+<h3 id="item-desc"></h3>
+</div>
+<script type="text/javascript" src="app/index.js"></script>
 </body>
 </html>
