@@ -1,12 +1,16 @@
-'''
+"""
 Created on Jul 7, 2016
 
 Utility module for water level controller
 
 @author: Levan Tsinadze
-'''
+"""
 
-# Retrieves host name from arguments or sets defaults
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+
 def get_host_info(argv):
   """Initializes port from arguments
     Args:
@@ -22,7 +26,6 @@ def get_host_info(argv):
   
   return host_nm
 
-# Retrieves port number from arguments or sets defaults
 def get_port_info(argv):
   """Initializes port from arguments
     Args:
@@ -38,7 +41,6 @@ def get_port_info(argv):
       
   return port_nm
 
-# Initializes host address and port number    
 def get_host_and_port(argv):
   """Initializes host and port from arguments
     Args:

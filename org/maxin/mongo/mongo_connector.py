@@ -1,29 +1,26 @@
-'''
+"""
 Created on Aug 24, 2016
 
 MongoDB connector for water level receiver
 
 @author: Levan Tsinadze
-'''
+"""
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
 import datetime
 
-from pymongo import MongoClient
+from org.maxin.mongo.abstract_mongo_connector import CONTAINER_KEY, INERT_ERROR, INERT_OK, LEVEL_KEY, RECORD_TIME, INERT_NONEED
+from org.maxin.mongo.abstract_mongo_connector import abstract_mongo_receiver
 
 
-CONTAINER_KEY = 'container_id'
-LEVEL_KEY = 'level_info'
-RECORD_TIME = 'record_time'
-
-INERT_OK = 'OK'
-INERT_ERROR = 'Could not save record cause of error'
-INERT_NONEED = 'Level was not changed and not saved'
-# MongoDB service
-class mongo_receiver(object):
+class mongo_receiver(abstract_mongo_receiver):
   """MongoDB client for water level database"""
   
   def __init__(self, host='localhost', port=27017):
-    self.client = MongoClient(host, port)
+    super(mongo_receiver, self).__init__(host, port)
     
   def init_collection(self):
     """Initializes water level collection 
@@ -32,7 +29,7 @@ class mongo_receiver(object):
         level_collection - water level collection
     """
     
-    db = self.client.level_database
+    db = self.init_database()
     level_collection = db.level_collection
     
     return level_collection
@@ -41,7 +38,7 @@ class mongo_receiver(object):
     """Creates water level record for database
       Args:
         level_info - water level
-        container_id - identifier of water container:
+        container_id - identifier of water container
       Return:
         mongo_record - water level record
     """
@@ -73,7 +70,7 @@ class mongo_receiver(object):
     mongo_record = self.create_record(level_info, container_id)
     level_collection = self.init_collection()
     level_id = level_collection.insert_one(mongo_record).inserted_id
-    print level_id
+    print(level_id)
     
     if level_id is not None:
       result_value = INERT_OK

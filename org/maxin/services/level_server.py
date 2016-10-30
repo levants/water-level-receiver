@@ -7,7 +7,8 @@ Server to receive water levels
 '''
 from sys import argv
 
-from flask import Flask, request
+from bson import json_util
+from flask import Flask, request, json
 from flask.templating import render_template
 
 from org.maxin.mongo import mongo_connector as MONGO
@@ -34,7 +35,7 @@ class water_level_controller(object):
     """
     level_record = self.mongo_client.read_last_record(container_id)
     if level_record is None:
-      water_level = None
+      water_level = "None"
     else:
       water_level = level_record[MONGO.LEVEL_KEY]
       
@@ -49,6 +50,41 @@ class water_level_controller(object):
         Transaction message
     """
     return self.mongo_client.validate_and_insert(level_info, container_id)
+  
+  def read_containers(self):
+    """Reads all containers
+      Returns:
+        all container records
+    """
+    container_records = self.mongo_client.read_containers()
+    results = []  
+    if container_records is not None:
+      for cont_record in container_records:
+        result = json.dumps(cont_record, default=json_util.default)
+        results.append(result)
+    result_json = json.dumps(results)
+    
+    return result_json
+  
+  def update_container(self, container_id, longitude, latitude):
+    """Updates container record in datanase
+      Args:
+        container_id - container identifier
+        longitude - longitude coordinate
+        latitude - latitude coordinate
+      Returns:
+        respone_data - response for record update
+    """
+    
+    if container_id is None or longitude is None or latitude is None:
+        respone_data = render_template("index.html")
+    else:
+      container_idi = int(container_id)
+      longitudef = float(longitude)
+      latitudef = float(latitude)
+      respone_data = self.mongo_client.inert_container(container_idi, longitudef, latitudef)
+    
+    return respone_data
     
   def read_or_write(self, request):
     """Reads or writes data in / from database
@@ -67,11 +103,23 @@ class water_level_controller(object):
         respone_data = self.write_level(level_info, container_id)
       else:
         respone_data = render_template("index.html")
+    elif request.args.get('containers') is not None:
+      if request.args.get('update') is not None:
+        longitude = request.args.get('long')
+        latitude = request.args.get('lat')
+        container_id = request.args.get('cont')
+        respone_data = self.update_container(container_id, longitude, latitude)
+      else:
+        respone_data = self.read_containers()
     else:
       respone_data = render_template("index.html")
       
     return str(respone_data)
-      
+  
+  def write_coordinates(self):
+    container_id = request.args.get('container_id')
+    if container_id is not None:
+      pass
     
 # Receives water level information from HTTP request
 @app.route('/', methods=['GET', 'POST'])
