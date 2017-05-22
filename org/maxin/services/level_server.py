@@ -1,21 +1,24 @@
-'''
+"""
 Created on Aug 24, 2016
 
 Server to receive water levels
 
 @author: Levan Tsinadze
-'''
+"""
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 from sys import argv
 
-from bson import json_util
 from flask import Flask, request, json
 from flask.templating import render_template
 
+from bson import json_util
 from org.maxin.mongo import mongo_connector as MONGO
 from org.maxin.mongo.mongo_connector import mongo_receiver
-from org.maxin.utils import controller_utils
 from org.maxin.services import config
-
+from org.maxin.utils import controller_utils
 
 
 app = Flask(__name__)

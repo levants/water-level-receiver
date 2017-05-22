@@ -5,7 +5,6 @@ Configure service parameters
 
 @author: Levan Tinadze
 """
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -29,7 +28,7 @@ def service_config():
                           help='Server port number')
   arg_parser.add_argument('--mongo_address',
                           type=str,
-                          deault='127.0.0.0',
+                          default='127.0.0.0',
                           help='MongoDB server address')
   (flags, _) = arg_parser.parse_known_args()
   
