@@ -110,6 +110,7 @@ class mongo_receiver(abstract_mongo_receiver):
       Return:
         level_id - assigned unique identifier of record
     """
+    
     if level_info is None:
       level_number = -1
     else:

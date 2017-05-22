@@ -13,7 +13,9 @@ from flask.templating import render_template
 
 from org.maxin.mongo import mongo_connector as MONGO
 from org.maxin.mongo.mongo_connector import mongo_receiver
-import org.maxin.utils.controller_utils as controller_utils
+from org.maxin.utils import controller_utils
+from org.maxin.services import config
+
 
 
 app = Flask(__name__)
@@ -139,11 +141,8 @@ def receive_level():
     
 if __name__ == "__main__":
   
-  (host_nm, port_nm) = controller_utils.get_host_and_port(argv)
-  if len(argv) > 1:
-    mongo_address = argv[1]
-  else:
-    mongo_address = '127.0.0.1'
+  flags = config.service_config()
+  (host_nm, port_nm, mongo_address) = (flags.host, flags.port, flags.mongo_address)
   mongo_client = mongo_receiver(mongo_address)
   
   app.run(host=host_nm, port=port_nm, threaded=True)
